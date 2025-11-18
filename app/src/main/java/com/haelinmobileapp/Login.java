@@ -13,15 +13,12 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Callback;
-import okhttp3.Call;
-import okhttp3.Response;
-import okhttp3.RequestBody;
+import com.haelinmobileapp.retrofit.ApiService;
+import com.haelinmobileapp.retrofit.LoginRequest;
+import com.haelinmobileapp.retrofit.LoginResponse;
+import com.haelinmobileapp.retrofit.RetrofitClient;
 
-import java.io.IOException;
+import retrofit2.Call;
 
 public class Login extends AppCompatActivity {
 
@@ -75,37 +72,32 @@ public class Login extends AppCompatActivity {
     }
 
     private void callBackend(String idToken) {
-        OkHttpClient client = new OkHttpClient();
+        ApiService api = RetrofitClient.getInstance().create(ApiService.class);
 
-        MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        String json = "{\"idToken\":\"" + idToken + "\"}";
+        LoginRequest request = new LoginRequest(idToken);
 
-        RequestBody body = RequestBody.create(json, JSON);
+        Call<LoginResponse> call = api.loginPatient("Bearer " + idToken, request);
 
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8080/haelin-app/user/login/patient")
-                .post(body)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(() ->
-                        Toast.makeText(Login.this, "Server not reachable", Toast.LENGTH_SHORT).show()
-                );
+            public void onResponse(Call<LoginResponse> call,
+                                   retrofit2.Response<LoginResponse> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(Login.this, Dash.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Login.this, "Backend Login Failed", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                runOnUiThread(() -> {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, Dash.class));
-                    } else {
-                        Toast.makeText(Login.this, "Backend Login Failed: " + response.code(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(Login.this, "Server not reachable", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
