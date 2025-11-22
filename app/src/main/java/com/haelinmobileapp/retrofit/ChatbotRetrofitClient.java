@@ -5,12 +5,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient {
+public class ChatbotRetrofitClient {
     private static Retrofit retrofit;
 
     public static Retrofit getInstance() {
         if (retrofit == null) {
-            // Add logging interceptor
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -19,7 +18,7 @@ public class RetrofitClient {
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8080/haelin-app/")
+                    .baseUrl("http://10.0.2.2:8000/")  // Chatbot backend URL here
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -27,3 +26,4 @@ public class RetrofitClient {
         return retrofit;
     }
 }
+

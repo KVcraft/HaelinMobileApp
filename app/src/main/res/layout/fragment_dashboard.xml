@@ -119,11 +119,13 @@
             android:layout_marginTop="20dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btnDiagnosis"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:cardCornerRadius="20dp"
                 android:alpha="0.8"
-                android:backgroundTint="@color/blue_theme">
+                android:backgroundTint="@color/blue_theme"
+                android:clickable="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -162,22 +164,20 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btnMap"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:cardCornerRadius="20dp"
                 android:alpha="0.8"
                 android:layout_marginLeft="30dp"
-                android:backgroundTint="@color/blue_theme">
-
+                android:backgroundTint="@color/blue_theme"
+                android:clickable="true">
 
                 <LinearLayout
-                    android:id="@+id/btnMap"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="10dp"
-                    android:clickable="true"
-                    android:onClick="startMap">
+                    android:padding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"

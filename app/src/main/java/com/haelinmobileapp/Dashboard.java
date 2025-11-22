@@ -2,6 +2,7 @@ package com.haelinmobileapp;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.api.Distribution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,9 +49,11 @@ public class Dashboard extends Fragment {
         // Set the user's name
         setUserName();
 
-        LinearLayout openMap = view.findViewById(R.id.btnMap);
+        CardView openMap = view.findViewById(R.id.btnMap);
+        CardView openDiagnosis = view.findViewById(R.id.btnDiagnosis);
 
         openMap.setOnClickListener(v -> startMap());
+        openDiagnosis.setOnClickListener(v -> startDiagnosis());
 
         return view;
 
@@ -76,11 +80,21 @@ public class Dashboard extends Fragment {
     }
 
     public void startMap() {
-        Fragment newFragment = new Map();
+        Fragment mapFragment = new Map();
 
         getParentFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout, newFragment)
+                .replace(R.id.frameLayout, mapFragment)
                 .addToBackStack(null)
                 .commit();
     }
+
+    public void startDiagnosis() {
+        Fragment diagnosisFragment = new DiagnosisTool();
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, diagnosisFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }

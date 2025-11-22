@@ -1,5 +1,7 @@
 package com.haelinmobileapp.retrofit;
 
+import com.haelinmobileapp.UserMessage;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,5 +29,10 @@ public interface ApiService {
 
     @GET("map/test")
     Call<String> testMapEndpoint();
+
+    @POST("chat")
+    Call<ChatReponse> chat(@Body UserMessage userMessage);
+
 }
+
 
