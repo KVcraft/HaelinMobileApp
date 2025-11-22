@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Map extends Fragment {
+public class DocMap extends Fragment {
 
     private MapView mapView;
     private MyLocationNewOverlay locationOverlay;

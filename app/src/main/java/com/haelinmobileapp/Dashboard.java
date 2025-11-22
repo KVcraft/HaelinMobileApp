@@ -4,16 +4,13 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.api.Distribution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -80,7 +77,7 @@ public class Dashboard extends Fragment {
     }
 
     public void startMap() {
-        Fragment mapFragment = new Map();
+        Fragment mapFragment = new DocMap();
 
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, mapFragment)

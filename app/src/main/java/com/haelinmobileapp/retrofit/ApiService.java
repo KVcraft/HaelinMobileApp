@@ -33,6 +33,9 @@ public interface ApiService {
     @POST("chat")
     Call<ChatReponse> chat(@Body UserMessage userMessage);
 
+    @POST("predict_dengue")
+    Call<DenguePredReponse> sendDengueSymptoms(@Body DengueSymptoms dengueSymptoms);
+
 }
 
 
