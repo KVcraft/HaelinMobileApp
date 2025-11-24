@@ -34,7 +34,10 @@ public interface ApiService {
     Call<ChatReponse> chat(@Body UserMessage userMessage);
 
     @POST("predict_dengue")
-    Call<DenguePredReponse> sendDengueSymptoms(@Body DengueSymptoms dengueSymptoms);
+    Call<PredReponse> sendDengueSymptoms(@Body DengueSymptoms dengueSymptoms);
+
+    @POST("predict_chikun")  // or whatever your endpoint is
+    Call<PredReponse> sendChikunSymptoms(@Body ChikunSymptoms symptoms);
 
 }
 

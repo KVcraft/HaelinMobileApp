@@ -1,6 +1,6 @@
 package com.haelinmobileapp.retrofit;
 
-public class DenguePredReponse {
+public class PredReponse {
 
     private int prediction;    // 0 or 1
     private float pred_score;  // confidence score

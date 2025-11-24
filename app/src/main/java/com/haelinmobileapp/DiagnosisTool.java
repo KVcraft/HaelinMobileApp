@@ -20,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.haelinmobileapp.retrofit.ApiService;
-import com.haelinmobileapp.retrofit.DenguePredReponse;
+import com.haelinmobileapp.retrofit.ChikunRetrofitClient;
+import com.haelinmobileapp.retrofit.ChikunSymptoms;
+import com.haelinmobileapp.retrofit.PredReponse;
 import com.haelinmobileapp.retrofit.DengueSymptoms;
 import com.haelinmobileapp.retrofit.DengueRetrofitClient;
 
@@ -35,8 +37,10 @@ public class DiagnosisTool extends Fragment {
     LinearLayout linearFrame;
     Button btnSubmit;
 
-    // radio buttons for dengue symptoms
-    RadioButton radFever, radHeadache, radJoint, radBleed;
+     RadioButton radFever, radHeadache, radjointPains, radBleed;
+     RadioButton radSex, radCold, radMyalgia, radFatigue, radVomitting;
+     RadioButton radArthritis, radConjuctivitis, radNausea;
+     RadioButton radMaculopapularRash, radEyePain, radChills, radSwelling;
 
     @Nullable
     @Override
@@ -62,14 +66,59 @@ public class DiagnosisTool extends Fragment {
                     // find radio buttons inside dengue layout
                     radFever = dengueView.findViewById(R.id.rad_fever);
                     radHeadache = dengueView.findViewById(R.id.rad_headache);
-                    radJoint = dengueView.findViewById(R.id.rad_joint);
+                    radjointPains = dengueView.findViewById(R.id.rad_joint);
                     radBleed = dengueView.findViewById(R.id.rad_bleed);
+
+                    // Clear chikungunya references
+                    radCold = null;
+                    radMyalgia = null;
+                    radFatigue = null;
+                    radVomitting = null;
+                    radArthritis = null;
+                    radConjuctivitis = null;
+                    radNausea = null;
+                    radMaculopapularRash = null;
+                    radEyePain = null;
+                    radChills = null;
+                    radSwelling = null;
+
+                } else if (selected.equals("Chikungunya")) {
+                    View chikunView = inflater.inflate(R.layout.frame_chikun, linearFrame, false);
+                    linearFrame.addView(chikunView);
+
+                    radSex = chikunView.findViewById(R.id.rad_sex);
+                    radBleed = chikunView.findViewById(R.id.rad_sex);
+                    radCold = chikunView.findViewById(R.id.rad_cold);
+                    radjointPains = chikunView.findViewById(R.id.rad_jointPains);
+                    radMyalgia = chikunView.findViewById(R.id.rad_myalgia);
+                    radFatigue = chikunView.findViewById(R.id.rad_fatigue);
+                    radVomitting = chikunView.findViewById(R.id.rad_vomitting);
+                    radArthritis = chikunView.findViewById(R.id.rad_arthritis);
+                    radConjuctivitis = chikunView.findViewById(R.id.rad_conjuctivitis);
+                    radNausea = chikunView.findViewById(R.id.rad_nausea);
+                    radMaculopapularRash = chikunView.findViewById(R.id.rad_maculopapular_rash);
+                    radEyePain = chikunView.findViewById(R.id.rad_eye_pain);
+                    radChills = chikunView.findViewById(R.id.rad_chills);
+                    radSwelling = chikunView.findViewById(R.id.rad_swelling);
+
                 } else {
-                    // Clear references if not dengue
+                    // Clear all references if not dengue or chikungunya
+                    radSex = null;
                     radFever = null;
                     radHeadache = null;
-                    radJoint = null;
+                    radjointPains = null;
                     radBleed = null;
+                    radCold = null;
+                    radMyalgia = null;
+                    radFatigue = null;
+                    radVomitting = null;
+                    radArthritis = null;
+                    radConjuctivitis = null;
+                    radNausea = null;
+                    radMaculopapularRash = null;
+                    radEyePain = null;
+                    radChills = null;
+                    radSwelling = null;
                 }
             }
 
@@ -92,38 +141,80 @@ public class DiagnosisTool extends Fragment {
             return;
         }
 
-        DengueSymptoms symptoms = new DengueSymptoms(
-                radFever.isChecked() ? 1 : 0,
-                radHeadache.isChecked() ? 1 : 0,
-                radJoint.isChecked() ? 1 : 0,
-                radBleed.isChecked() ? 1 : 0
-        );
+        // Get the selected disease from spinner
+        String selectedDisease = spDisease.getSelectedItem().toString();
 
-        ApiService apiService = DengueRetrofitClient.getInstance().create(ApiService.class);
+        if (selectedDisease.equals("Dengue")) {
+            DengueSymptoms symptoms = new DengueSymptoms(
+                    radFever.isChecked() ? 1 : 0,
+                    radHeadache.isChecked() ? 1 : 0,
+                    radjointPains.isChecked() ? 1 : 0,
+                    radBleed.isChecked() ? 1 : 0
+            );
 
-        Call<DenguePredReponse> call = apiService.sendDengueSymptoms(symptoms);
+            ApiService apiService = DengueRetrofitClient.getInstance().create(ApiService.class);
+            Call<PredReponse> call = apiService.sendDengueSymptoms(symptoms);
 
-        call.enqueue(new retrofit2.Callback<DenguePredReponse>() {
-            @Override
-            public void onResponse(Call<DenguePredReponse> call, retrofit2.Response<DenguePredReponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    DenguePredReponse denguePredReponse = response.body();
-
-                    displayPredictionResult(denguePredReponse.getPrediction());
-
-                    savePrediction(denguePredReponse.getPrediction(), denguePredReponse.getPred_score(), denguePredReponse.getPred_date());
-
-                    clearInputs();
-
+            call.enqueue(new retrofit2.Callback<PredReponse>() {
+                @Override
+                public void onResponse(Call<PredReponse> call, retrofit2.Response<PredReponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        PredReponse predReponse = response.body();
+                        displayPredictionResult(predReponse.getPrediction());
+                        savePrediction(predReponse.getPrediction(), predReponse.getPred_score(), predReponse.getPred_date());
+                        clearInputs();
+                    }
                 }
 
-            }
+                @Override
+                public void onFailure(Call<PredReponse> call, Throwable t) {
+                    Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            @Override
-            public void onFailure(Call<DenguePredReponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        } else if (selectedDisease.equals("Chikungunya")) {
+            // Create Chikungunya symptoms object
+            ChikunSymptoms symptoms = new ChikunSymptoms(
+                    radSex.isChecked() ? 1: 0,
+                    radFever.isChecked() ? 1 : 0,
+                    radCold != null && radCold.isChecked() ? 1 : 0,
+                    radjointPains.isChecked() ? 1 : 0,
+                    radMyalgia != null && radMyalgia.isChecked() ? 1 : 0,
+                    radHeadache != null && radHeadache.isChecked() ? 1 : 0,
+                    radFatigue != null && radFatigue.isChecked() ? 1 : 0,
+                    radVomitting != null && radVomitting.isChecked() ? 1 : 0,
+                    radArthritis != null && radArthritis.isChecked() ? 1 : 0,
+                    radConjuctivitis != null && radConjuctivitis.isChecked() ? 1 : 0,
+                    radNausea != null && radNausea.isChecked() ? 1 : 0,
+                    radMaculopapularRash != null && radMaculopapularRash.isChecked() ? 1 : 0,
+                    radEyePain != null && radEyePain.isChecked() ? 1 : 0,
+                    radChills != null && radChills.isChecked() ? 1 : 0,
+                    radSwelling != null && radSwelling.isChecked() ? 1 : 0
+            );
+
+            // You'll need a different Retrofit client for Chikungunya or modify your existing one
+            ApiService apiService = ChikunRetrofitClient.getInstance().create(ApiService.class);
+            Call<PredReponse> call = apiService.sendChikunSymptoms(symptoms);
+
+            call.enqueue(new retrofit2.Callback<PredReponse>() {
+                @Override
+                public void onResponse(Call<PredReponse> call, retrofit2.Response<PredReponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        PredReponse predReponse = response.body();
+                        displayPredictionResult(predReponse.getPrediction());
+                        savePrediction(predReponse.getPrediction(), predReponse.getPred_score(), predReponse.getPred_date());
+                        clearInputs();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PredReponse> call, Throwable t) {
+                    Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "Please select a valid disease", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Save prediction to Firestore
@@ -137,37 +228,62 @@ public class DiagnosisTool extends Fragment {
         }
 
         String userId = currentUser.getUid();
+        String selectedDisease = spDisease.getSelectedItem().toString();
 
         Map<String, Object> predictionData = new HashMap<>();
         predictionData.put("prediction", prediction);
         predictionData.put("pred_score", pred_score);
         predictionData.put("pred_date", pred_date);
+        predictionData.put("disease_type", selectedDisease); // Save which disease was predicted
 
         db.collection("users")
                 .document(userId)
                 .collection("predictions")
-                .add(predictionData);
+                .add(predictionData)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getContext(), "Prediction saved successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to save prediction", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void displayPredictionResult(int prediction) {
         TextView txtPred = getView().findViewById(R.id.txt_pred);
+        String selectedDisease = spDisease.getSelectedItem().toString();
 
+        String resultText;
         if (prediction == 1) {
-            txtPred.setText("Positive");
+            resultText = selectedDisease + " Positive";
         } else if (prediction == 0) {
-            txtPred.setText("Negative");
+            resultText = selectedDisease + " Negative";
         } else {
-            txtPred.setText("Unknown");
+            resultText = "Unknown Result";
         }
+
+        txtPred.setText(resultText);
     }
 
-
     private void clearInputs() {
+        // Clear common symptoms
+        if (radFever != null) radFever.setChecked(false);
+        if (radHeadache != null) radHeadache.setChecked(false);
+        if (radjointPains != null) radjointPains.setChecked(false);
+        if (radBleed != null) radBleed.setChecked(false);
 
-        radFever.setChecked(false);
-        radHeadache.setChecked(false);
-        radJoint.setChecked(false);
-        radBleed.setChecked(false);
+        // Clear Chikungunya specific symptoms
+        if (radSex != null) radSex.setChecked(false);
+        if (radCold != null) radCold.setChecked(false);
+        if (radMyalgia != null) radMyalgia.setChecked(false);
+        if (radFatigue != null) radFatigue.setChecked(false);
+        if (radVomitting != null) radVomitting.setChecked(false);
+        if (radArthritis != null) radArthritis.setChecked(false);
+        if (radConjuctivitis != null) radConjuctivitis.setChecked(false);
+        if (radNausea != null) radNausea.setChecked(false);
+        if (radMaculopapularRash != null) radMaculopapularRash.setChecked(false);
+        if (radEyePain != null) radEyePain.setChecked(false);
+        if (radChills != null) radChills.setChecked(false);
+        if (radSwelling != null) radSwelling.setChecked(false);
     }
 
 }
