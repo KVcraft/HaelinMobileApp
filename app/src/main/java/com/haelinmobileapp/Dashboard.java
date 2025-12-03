@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.osmdroid.config.Configuration;
 
@@ -38,13 +39,14 @@ public class Dashboard extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            loadUserData(user.getUid());
+        }
 
         // Get reference to the TextView
         lblUser = view.findViewById(R.id.lbl_user);
 
-        // Set the user's name
-        setUserName();
 
         CardView openMap = view.findViewById(R.id.btnMap);
         CardView openDiagnosis = view.findViewById(R.id.btnDiagnosis);
@@ -56,24 +58,11 @@ public class Dashboard extends Fragment {
 
     }
 
-    private void  setUserName(){
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if(currentUser != null){
-            String displayName = currentUser.getDisplayName();
-
-            lblUser.setText("Hi "+displayName);
-
-        } else{
-            lblUser.setText("Hi User");
-        }
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-        setUserName();
     }
 
     public void startMap() {
@@ -93,5 +82,20 @@ public class Dashboard extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    private void loadUserData(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        String name = doc.getString("name");
+                        lblUser.setText("Hi "+ name);
+                    }
+                });
+    }
+
 
 }

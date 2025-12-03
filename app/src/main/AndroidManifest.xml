@@ -4,11 +4,10 @@
     package="com.haelinmobileapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -19,8 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HaelinMobileApp"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".CreateAccount"
+            android:exported="false" />
         <activity
             android:name=".Dash"
             android:exported="false" />
@@ -40,11 +42,9 @@
         <meta-data
             android:name="osmdroid.basePath"
             android:value="osmdroid" />
-
         <meta-data
             android:name="osmdroid.cachePath"
             android:value="osmdroid/cache" />
-
     </application>
 
 </manifest>

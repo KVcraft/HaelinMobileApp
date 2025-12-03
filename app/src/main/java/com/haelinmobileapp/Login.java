@@ -2,8 +2,10 @@ package com.haelinmobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +27,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText emailField, passwordField;
     Button loginBtn;
+    TextView createAccBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class Login extends AppCompatActivity {
         emailField = findViewById(R.id.txt_email);
         passwordField = findViewById(R.id.txt_password);
         loginBtn = findViewById(R.id.btn_login);
+        createAccBtn = findViewById(R.id.btnCreateAcc);
 
         loginBtn.setOnClickListener(v -> loginUser());
     }
@@ -98,6 +102,12 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Server not reachable", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void CreateAcc (View view){
+
+        startActivity(new Intent(this, CreateAccount.class));
+
     }
 
 }

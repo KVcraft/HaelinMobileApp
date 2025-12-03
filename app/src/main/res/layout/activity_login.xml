@@ -115,7 +115,9 @@
                 android:layout_marginLeft="10dp"
                 android:text="Create an account"
                 android:textColor="#286CB5"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:onClick="CreateAcc"
+                android:id="@+id/btnCreateAcc"/>
 
         </LinearLayout>
 
