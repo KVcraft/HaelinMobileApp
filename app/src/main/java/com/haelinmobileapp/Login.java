@@ -15,13 +15,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import com.haelinmobileapp.retrofit.ApiService;
-import com.haelinmobileapp.retrofit.LoginRequest;
-import com.haelinmobileapp.retrofit.LoginResponse;
-import com.haelinmobileapp.retrofit.RetrofitClient;
-
-import retrofit2.Call;
-
 public class Login extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -55,53 +48,25 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            user.getIdToken(true).addOnCompleteListener(idTokenTask -> {
-                                if (idTokenTask.isSuccessful()) {
-                                    String idToken = idTokenTask.getResult().getToken();
-                                    callBackend(idToken);
-                                } else {
-                                    Toast.makeText(this, "Token error", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
+                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(Login.this, Dash.class);
+                        startActivity(intent);
+                        finish();
+
                     } else {
-                        Toast.makeText(this, "Firebase Login Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Login failed: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
 
-    private void callBackend(String idToken) {
-        ApiService api = RetrofitClient.getInstance().create(ApiService.class);
 
-        LoginRequest request = new LoginRequest(idToken);
-
-        Call<LoginResponse> call = api.loginPatient("Bearer " + idToken, request);
-
-        call.enqueue(new retrofit2.Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call,
-                                   retrofit2.Response<LoginResponse> response) {
-
-                if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(Login.this, Dash.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(Login.this, "Backend Login Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(Login.this, "Server not reachable", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void CreateAcc (View view){

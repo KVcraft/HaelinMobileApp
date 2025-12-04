@@ -12,7 +12,8 @@
         android:layout_width="350dp"
         android:layout_height="160dp"
         app:cardCornerRadius="20dp"
-        android:elevation="40dp">
+        android:elevation="40dp"
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
