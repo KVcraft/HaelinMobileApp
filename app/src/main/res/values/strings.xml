@@ -6,4 +6,13 @@
         <item>Chikungunya</item>
     </string-array>
 
+    <string-array name="health_tips">
+        <item>Drink water regularly.</item>
+        <item>Get 7–8 hours of sleep.</item>
+        <item>Walk at least 10 minutes a day.</item>
+        <item>Don’t skip breakfast.</item>
+        <item>Stretch your back every hour.</item>
+    </string-array>
+
+
 </resources>

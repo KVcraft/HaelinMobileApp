@@ -19,7 +19,7 @@ import org.osmdroid.config.Configuration;
 
 public class Dashboard extends Fragment {
 
-    private TextView lblUser;
+    private TextView lblUser, txtTips;
     private FirebaseAuth mAuth;
 
     @Override
@@ -46,6 +46,13 @@ public class Dashboard extends Fragment {
 
         // Get reference to the TextView
         lblUser = view.findViewById(R.id.lbl_user);
+        txtTips = view.findViewById(R.id.txt_tips);
+
+        //Set the random tips
+        String[] tips = getResources().getStringArray(R.array.health_tips);
+        int randomIndex = new java.util.Random().nextInt(tips.length);
+        txtTips.setText(tips[randomIndex]);
+
 
 
         CardView openMap = view.findViewById(R.id.btnMap);
