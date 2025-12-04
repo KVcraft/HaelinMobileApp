@@ -1,6 +1,8 @@
 package com.haelinmobileapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,4 +23,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    public void startApp (View view){
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+    }
+
 }
