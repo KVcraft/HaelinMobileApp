@@ -13,12 +13,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @POST("user/login/patient")
-    Call<LoginResponse> loginPatient(
-            @Header("Authorization") String authHeader,
-            @Body LoginRequest request
-    );
-
     @GET("map/hospitals")
     Call<List<Hospital>> getNearbyHospitals(
             @Query("lat") double lat,
