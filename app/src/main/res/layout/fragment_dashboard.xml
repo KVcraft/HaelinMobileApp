@@ -34,12 +34,6 @@
                     android:layout_height="40dp"
                     android:src="@drawable/ic_profile"/>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_notifications"
-                    android:layout_marginLeft="20dp"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -220,11 +214,13 @@
             android:gravity="center">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btnMedHis"
                 android:layout_width="335dp"
                 android:layout_height="150dp"
                 app:cardCornerRadius="20dp"
                 android:alpha="0.8"
-                android:backgroundTint="@color/blue_theme">
+                android:backgroundTint="@color/blue_theme"
+                android:clickable="true">
 
 
                 <LinearLayout

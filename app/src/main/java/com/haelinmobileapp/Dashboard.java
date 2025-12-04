@@ -50,9 +50,12 @@ public class Dashboard extends Fragment {
 
         CardView openMap = view.findViewById(R.id.btnMap);
         CardView openDiagnosis = view.findViewById(R.id.btnDiagnosis);
+        CardView openMedHis = view.findViewById(R.id.btnMedHis);
+
 
         openMap.setOnClickListener(v -> startMap());
         openDiagnosis.setOnClickListener(v -> startDiagnosis());
+        openMedHis.setOnClickListener(v -> startMedHis());
 
         return view;
 
@@ -79,6 +82,15 @@ public class Dashboard extends Fragment {
 
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, diagnosisFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void startMedHis() {
+        Fragment medHisFragment = new MedHistory();
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, medHisFragment)
                 .addToBackStack(null)
                 .commit();
     }

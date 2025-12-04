@@ -57,4 +57,13 @@ public class Dash extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public void onBack(View view) {
+        getSupportFragmentManager()
+                .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); // Clear all back stack
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, new Dashboard()) // change container and fragment class as needed
+                .commit();
+    }
 }

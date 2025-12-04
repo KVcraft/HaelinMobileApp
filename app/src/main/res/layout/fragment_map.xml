@@ -21,7 +21,8 @@
                 android:id="@+id/backButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_back"/>
+                android:src="@drawable/ic_back"
+                android:onClick="onBack"/>
 
             <ImageView
                 android:layout_width="50dp"
