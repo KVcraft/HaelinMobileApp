@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="250dp"
-    android:background="#DEF4FF"
+    android:background="@color/light_blue_theme"
     android:id="@+id/frame_chikun">
 
     <ScrollView

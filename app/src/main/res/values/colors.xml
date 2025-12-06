@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue_theme">#286CB5</color>
+    <color name="light_blue_theme">#C2DFFF</color>
 
     <color name="text_field_text">#FF000000</color>
 </resources>
