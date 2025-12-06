@@ -63,8 +63,8 @@ public class Chatbot extends Fragment {
         recyclerView.setAdapter(chatAdapter);
 
         // Add initial bot greeting
-        messages.add(new ChatMessage("Hey! Ask me anything about health.", false));
-        chatAdapter.notifyDataSetChanged();
+        //messages.add(new ChatMessage("Hey! Ask me anything about health.", false));
+        //chatAdapter.notifyDataSetChanged();
 
         EditText editText = view.findViewById(R.id.txt_type_message);
         ImageView sendBtn = view.findViewById(R.id.btnChatSend);

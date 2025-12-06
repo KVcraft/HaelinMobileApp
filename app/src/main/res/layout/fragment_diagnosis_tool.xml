@@ -54,12 +54,13 @@
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:cardCornerRadius="10dp"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:backgroundTint="@color/light_blue_theme">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,11 +72,12 @@
                     android:id="@+id/sp_disease"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:entries="@array/diseases"/>
+                    android:entries="@array/diseases"
+                    android:popupBackground="@color/white"/>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
 
@@ -109,13 +111,14 @@
             android:gravity="center"
             android:padding="5dp">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:elevation="20dp"
                 app:cardCornerRadius="10dp"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/light_blue_theme">
 
                 <LinearLayout
                     android:layout_width="250dp"
@@ -130,7 +133,7 @@
                         android:text="NA"/>
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

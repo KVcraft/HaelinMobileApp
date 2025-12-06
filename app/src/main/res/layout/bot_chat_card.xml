@@ -7,11 +7,12 @@
     android:padding="10dp"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/light_blue_theme">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,6 +28,6 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
