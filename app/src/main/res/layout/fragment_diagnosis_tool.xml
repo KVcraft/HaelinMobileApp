@@ -72,7 +72,8 @@
                     android:id="@+id/sp_disease"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:entries="@array/diseases"/>
+                    android:entries="@array/diseases"
+                    android:popupBackground="@color/white"/>
 
             </LinearLayout>
 
